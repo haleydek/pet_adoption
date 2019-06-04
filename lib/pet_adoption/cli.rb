@@ -7,20 +7,20 @@ class PetAdoption::CLI
   
   def menu
     puts "Our shelters have cats and dogs available for adoption."
-    puts "To view a list of the available cats, please enter cat."
-    puts "To view a list of the available dogs, please enter dog."
+    puts "To view a list of the available cats, please enter cats."
+    puts "To view a list of the available dogs, please enter dogs."
     puts "Otherwise, enter exit."
-    input = nil
-    while input != "exit"
-      case input
-        when "cat"
-          puts "list of cats"
-          #execute list of cats
-        when "dog"
-          puts "list of dogs"
-          #execute list of dogs
-      end
-    end
+    # input = nil
+    # while input != "exit"
+    #   case input
+    #     when "cat"
+    #       puts "list of cats"
+    #       #execute list of cats
+    #     when "dog"
+    #       puts "list of dogs"
+    #       #execute list of dogs
+    #   end
+    # end
   end
   
   def list_cats

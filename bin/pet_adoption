@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
-require "./lib/pet_adoption"
+require 'bundler/setup'
+require 'pet_adoption'
 
 PetAdoption::CLI.new.call
