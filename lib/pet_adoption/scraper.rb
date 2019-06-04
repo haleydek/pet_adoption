@@ -1,6 +1,6 @@
 class PetAdoption::Scraper
-  def scrape_index_page(index_url)
-    index_page = Nokogiri::HTML(open(index_url))
+  def scrape_index_page
+    index_page = Nokogiri::HTML(open('http://www.pawschicago.org/our-work/pet-adoption/pets-available/'))
     pets = []
     pet_types = ["cats", "dogs"]
     pet_types.each do |type|
