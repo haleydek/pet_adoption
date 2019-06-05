@@ -50,7 +50,6 @@ class PetAdoption::Scraper
       age = attribute.css(".animal--age").text.strip
       weight = attribute.css(".animal--weight").text.strip
       fee = attribute.css(".animal--price").text.strip.gsub("Adoption Fee: ", "").gsub(/[*]/, "")
-      binding.pry
     end
     
     id = page.css("div.animal--details-bottom .animal-item").first.text
