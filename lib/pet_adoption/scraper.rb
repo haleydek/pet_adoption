@@ -29,11 +29,13 @@ class PetAdoption::Scraper
   def scrape_pets_by_species
     #accepts user input of species. Retrieves corresponding species url and scrapes list of pets
     #variable should be a species path, not a hard-coded URL
-    page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/adoption?f%5B0%5D=animal_type%3ASmall%26Furry'))
+    page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/adoption?f%5B0%5D=animal_type%3ACat'))
     page.css("div.views-row").each do |pet|
-      pet_name = pet.css(".field--name-name a").text
-      pet_breed = pet.css(".field field--breed").text
-      pet_url = BASEPATH + pet.css(".field--name-name a").attr("href").text
+      name = pet.css("div.field--name-name a").text
+      breed = pet.css("div.field.field--breed").text.strip
+      url = BASEPATH + pet.css("div.field--name-name a").attr("href").text
+      shelter = pet.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
+      binding.pry
     end
   end
   
