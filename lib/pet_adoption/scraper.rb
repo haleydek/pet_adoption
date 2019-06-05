@@ -4,6 +4,7 @@ require 'open-uri'
 
 class PetAdoption::Scraper
   BASEPATH = 'https://www.animalhumanesociety.org'
+  
   def get_page
     Nokogiri::HTML(open(BASEPATH + '/adoption'))
   end
@@ -27,17 +28,24 @@ class PetAdoption::Scraper
   end
   
   def scrape_pets_by_species
-    #accepts user input of species. Retrieves corresponding species url and scrapes list of pets
-    #variable should be a species path, not a hard-coded URL
+    #Need a method that accepts user input of species. Retrieves corresponding species url
+    #accepts argument of species url
+    #scrapes list of pets
     page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/adoption?f%5B0%5D=animal_type%3ACat'))
     page.css("div.views-row").each do |pet|
       name = pet.css("div.field--name-name a").text
       breed = pet.css("div.field.field--breed").text.strip
       url = BASEPATH + pet.css("div.field--name-name a").attr("href").text
       shelter = pet.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
-      binding.pry
     end
   end
   
+  def scrape_pet
+    #need a method that accepts user input of a pet name and returns the pet's url
+    #accepts argument of a pet's url
+    #scrapes a pet's info
+    page = Nokogiri::HTML(open(''))
+    
+  end
   
 end
