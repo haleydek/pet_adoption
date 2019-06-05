@@ -9,22 +9,14 @@ class PetAdoption::Scraper
     Nokogiri::HTML(open(BASEPATH + '/adoption'))
   end
   
-  def scrape_species_paths
-    species_paths = []
-    self.get_page.css("#block-animaltype div div li.facet-item").each do |one_species|
-      path = BASEPATH + one_species.css("a").attr("href").text
-      species_paths << path
-    end
-    species_paths
+  def scrape_species_index
+    self.get_page.css("#block-animaltype div div li.facet-item")
   end
   
-  def scrape_species
-    species = []
-    self.get_page.css("#block-animaltype div div li.facet-item").each do |one_species|
-      pet_species = one_species.css("a .facet-item__value").text
-      species << pet_species
+  def create_species
+    scrape_species_index.each do |s|
+      PetAdoption::Species.new_from_species_index(s)
     end
-    species
   end
   
   def scrape_pets_by_species
