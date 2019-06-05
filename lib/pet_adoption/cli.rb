@@ -4,7 +4,7 @@ require 'open-uri'
 
 class PetAdoption::CLI
   def call
-    PetAdoption::Scraper.new.scrape_pets_by_species
+    PetAdoption::Scraper.new.scrape_pet
     puts "Welcome to the Twin Cities' Animal Humane Society!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!"
     menu
