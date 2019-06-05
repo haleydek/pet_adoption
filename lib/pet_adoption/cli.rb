@@ -1,6 +1,7 @@
 class PetAdoption::CLI
   def call
-    Scraper.scrape_index_page
+    scrape = Scraper.new.get_page
+    
     puts "Welcome to PAWS Chicago!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!"
     menu
