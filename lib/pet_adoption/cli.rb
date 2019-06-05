@@ -1,16 +1,18 @@
+require 'pry'
+require 'nokogiri'
+require 'open-uri'
+
 class PetAdoption::CLI
   def call
-    scrape = Scraper.new.get_page
-    
-    puts "Welcome to PAWS Chicago!"
+    PetAdoption::Scraper.new.get_pet_types
+    puts "Welcome to the Twin Cities' Animal Humane Society!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!"
     menu
   end
   
   def menu
-    puts "Our shelters have cats and dogs available for adoption."
-    puts "To view a list of the available cats, please enter cats."
-    puts "To view a list of the available dogs, please enter dogs."
+    puts "Our shelters have the following animal types available for adoption: "
+     #print animal types from PetAdoption::Scraper.get_pet_types
     puts "Otherwise, enter exit."
     # input = nil
     # while input != "exit"
