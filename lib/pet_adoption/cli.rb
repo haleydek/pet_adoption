@@ -11,9 +11,17 @@ class PetAdoption::CLI
   end
   
   def menu
-    puts "Our shelters have the following animal types available for adoption: "
-     #print animal types from PetAdoption::Scraper.get_pet_types
+    puts "Our shelters have the following types of animals available for adoption: "
+
+    PetAdoption::Species.print_species
+    
+    puts "Which type of animal are you interested in adopting? Please enter the corresponding number to view the available pets."
     puts "Otherwise, enter exit."
+    
+    input = gets.strip
+    
+    species_url = PetAdoption::Species.get_species_url_from_name(input.to_i)
+    
     # input = nil
     # while input != "exit"
     #   case input
@@ -25,14 +33,6 @@ class PetAdoption::CLI
     #       #execute list of dogs
     #   end
     # end
-  end
-  
-  def list_cats
-    #lists all of the cats available for adoption
-  end
-  
-  def list_dogs
-    #lists all of the dogs available for adoption
   end
   
 end

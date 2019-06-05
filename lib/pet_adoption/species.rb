@@ -23,4 +23,16 @@ class PetAdoption::Species
     @@all
   end
   
+  def self.print_species
+    self.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
+  end
+  
+  def self.get_species_url_from_name(input.to_i)
+    i = 0
+    self.all.find do |species|
+      return species.url when i == input
+      i += 1
+    end
+  end
+  
 end

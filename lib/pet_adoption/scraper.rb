@@ -18,11 +18,11 @@ class PetAdoption::Scraper
       PetAdoption::Species.new_from_species_index(s)
     end
   end
-  
-  def scrape_pets_by_species
     #Need a method that accepts user input of species. Retrieves corresponding species url
     #accepts argument of species url
     #scrapes list of pets
+    
+  def scrape_pets_index
     page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/adoption?f%5B0%5D=animal_type%3ACat'))
     page.css("div.views-row").each do |pet|
       name = pet.css("div.field--name-name a").text
