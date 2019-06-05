@@ -44,14 +44,16 @@ class PetAdoption::Scraper
     #need a method that accepts user input of a pet name and returns the pet's url
     #accepts argument of a pet's url
     #scrapes a pet's info
-    page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/animal/adoption/41738183'))
+    page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/animal/adoption/41683069'))
     page.css("div.animal--details-top").each do |attribute|
-      gender = attribute.css(".animal--sex").text
-      age = attribute.css(".animal--age").text
-      weight = attribute.css(".animal--weight").text
+      gender = attribute.css(".animal--sex").text.strip
+      age = attribute.css(".animal--age").text.strip
+      weight = attribute.css(".animal--weight").text.strip
       fee = attribute.css(".animal--price").text.strip.gsub("Adoption Fee: ", "").gsub(/[*]/, "")
       binding.pry
     end
+    
+    id = page.css("div.animal--details-bottom .animal-item").first.text
   end
   
 end
