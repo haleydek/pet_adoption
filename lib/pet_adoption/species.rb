@@ -22,6 +22,7 @@ class PetAdoption::Species
     self.new(s.css("a .facet-item__value").text, BASEPATH + s.css("a").attr("href").text)
   end
   
+  #not sure if I need #find_by_name for the species
   def self.find_by_name(name)
     found_species = self.all.find { |species| species.name == name }
     found_species

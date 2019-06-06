@@ -40,7 +40,7 @@ class PetAdoption::Scraper
   end
   
   
-  def scrape_pet_details
+  def scrape_pet_details(pet_url)
     #need a method that accepts user input of a pet name and returns the pet's url
     #accepts argument of a pet's url
     #scrapes a pet's info

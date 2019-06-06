@@ -5,7 +5,6 @@
 
 class PetAdoption::Pets
   attr_accessor :species, :name, :breed, :shelter, :gender, :age, :weight, :fee, :id, :url
-  BASEPATH = 'https://www.animalhumanesociety.org'
   @@all = []
 
   def initialize(pet_hash)
