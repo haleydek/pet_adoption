@@ -18,9 +18,6 @@ class PetAdoption::Scraper
       PetAdoption::Species.new_from_species_index(s)
     end
   end
-    #Need a method that accepts user input of species. Retrieves corresponding species url
-    #accepts argument of species url
-    #scrapes list of pets
     
   def scrape_pets_index(species_url)
     Nokogiri::HTML(open(species_url))
@@ -29,7 +26,7 @@ class PetAdoption::Scraper
   def create_pets
     PetAdoption::Species.all.each do |species|
       scrape_pets_index(species.url).css("div.views-row").each do |pet_index|
-        PetAdoption::Pets.find_or_create_from_pet_index(pet_index)
+        new_pet = PetAdoption::Pets.find_or_create_from_pet_index(pet_index)
       end
     end
     PetAdoption::Pets.all

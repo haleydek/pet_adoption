@@ -24,7 +24,6 @@ class PetAdoption::CLI
     
     species_url = get_species_url_from_name(input)
     
-    PetAdoption::Scraper.create_pets(species_url)
     #scrape species page to get list of pets
     #print list of pets
     
