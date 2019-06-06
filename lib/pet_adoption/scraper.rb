@@ -23,13 +23,11 @@ class PetAdoption::Scraper
     #scrapes list of pets
     
   def scrape_pets_index
-    page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/adoption?f%5B0%5D=animal_type%3ACat'))
-    page.css("div.views-row").each do |pet|
-      name = pet.css("div.field--name-name a").text
-      breed = pet.css("div.field.field--breed").text.strip
-      url = BASEPATH + pet.css("div.field--name-name a").attr("href").text
-      shelter = pet.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
-    end
+    Nokogiri::HTML(open(species_url))
+  end
+  
+  def create_pet
+    scrape_pets_index.css("div.views-row").each { |pet| PetAdoption::Pets.new(pet) }
   end
   
   def scrape_pet
