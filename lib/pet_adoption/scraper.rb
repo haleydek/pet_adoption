@@ -39,6 +39,10 @@ class PetAdoption::Scraper
     pets
   end
   
+  def self.make_pets
+    pets_array = self.create_pets
+    PetAdoption::Pets.find_or_create_from_collection(pets_array)
+  end
   
   def scrape_pet_details(pet_url)
     #need a method that accepts user input of a pet name and returns the pet's url

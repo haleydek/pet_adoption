@@ -42,12 +42,6 @@ class PetAdoption::CLI
     # end
   end
   
-  def make_pets
-    pets_array = PetAdoption::Scraper.create_pets
-    PetAdoption::Pets.find_or_create_from_collection(pets_array)
-  end
-    
-  
   def print_species
     PetAdoption::Species.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
   end

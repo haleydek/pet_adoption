@@ -2,20 +2,26 @@
 #instantiate pets when you scrape the list of pets from species url
 
 class PetAdoption::Species
-  attr_accessor :name, :pets, :url
+  attr_accessor :name, :url
   @@all = []
   BASEPATH = 'https://www.animalhumanesociety.org'
   
   def initialize(name, url)
     @name = name
     @url = url
-    @pets = []
+    #@pets = [] !!not single source of truth
     self.class.all << self
   end
   
-  def add_pet(pet)
-    @pets << pet
-    pet.species = self
+  #def add_pet(pet)
+  #  @pets << pet
+  #  pet.species = self
+  #end
+  
+  def pets 
+    PetAdoption::Pets.all.select do |pet| 
+      pet.species == self 
+    end 
   end
   
   def self.new_from_species_index(s)
