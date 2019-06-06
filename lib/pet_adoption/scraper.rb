@@ -26,14 +26,16 @@ class PetAdoption::Scraper
     Nokogiri::HTML(open(species_url))
   end
   
-  def create_pets(species_url)
-    scrape_pets_index(species_url).css("div.views-row").each { |pet| PetAdoption::Pets.new(pet) }
-  end
-  
-  def create_all_pets
-    PetAdoption::Species.all.each { |species| create_pets(species.url) }
+  def create_pets
+    PetAdoption::Species.all.each do |species|
+      scrape_pets_index(species.url).css("div.views-row").each do |pet_index|
+        PetAdoption::Pets.find_or_create_from_pet_index(pet_index)
+      end
+    end
+    PetAdoption::Pets.all
     binding.pry
   end
+  
   
   def scrape_pet_details
     #need a method that accepts user input of a pet name and returns the pet's url

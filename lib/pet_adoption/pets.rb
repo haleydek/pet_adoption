@@ -9,18 +9,18 @@ class PetAdoption::Pets
   @@all = []
   
   def initialize(name, breed, shelter, url)
-    @name = pet.css("div.field--name-name a").text
-    @breed = pet.css("div.field.field--breed").text.strip
-    @shelter = pet.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
-    @url = BASEPATH + pet.css("div.field--name-name a").attr("href").text
+    @name = name
+    @breed = breed
+    @shelter = shelter
+    @url = url
     self.class.all << self
   end
   
   def self.find_or_create_from_pet_index(pet_index)
-    name = pet.css("div.field--name-name a").text
-    breed = pet.css("div.field.field--breed").text.strip
-    shelter = pet.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
-    url = BASEPATH + pet.css("div.field--name-name a").attr("href").text
+    name = pet_index.css("div.field--name-name a").text
+    breed = pet_index.css("div.field.field--breed").text.strip
+    shelter = pet_index.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
+    url = BASEPATH + pet_index.css("div.field--name-name a").attr("href").text
     
     found_pet = self.all.find { |pet| pet.url == url }
     

@@ -51,7 +51,7 @@ class PetAdoption::CLI
   def get_species_url_from_name(input)
     i = 0
     PetAdoption::Species.all.find do |species|
-      return species.url when i == input.to_i
+      return species.url if i == input.to_i
       i += 1
     end
   end
