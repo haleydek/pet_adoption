@@ -7,30 +7,22 @@ class PetAdoption::Pets
   attr_accessor :species, :name, :breed, :shelter, :gender, :age, :weight, :fee, :id, :url
   BASEPATH = 'https://www.animalhumanesociety.org'
   @@all = []
-  
-  def initialize(name, breed, shelter, url)
-    @name = name
-    @breed = breed
-    @shelter = shelter
-    @url = url
+
+  def initialize(pet_hash)
+    pet_hash.each { |key, value| self.send(("#{key}="), value) }
     self.class.all << self
   end
   
-  def self.find_or_create_from_pet_index(pet_index)
-    name = pet_index.css("div.field--name-name a").text
-    breed = pet_index.css("div.field.field--breed").text.strip
-    shelter = pet_index.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
-    url = BASEPATH + pet_index.css("div.field--name-name a").attr("href").text
-    
-    found_pet = self.all.find { |pet| pet.url == url }
-    
-    if found_pet == nil
-      self.new(name, breed, shelter, url)
-    else
-      found_pet
+  def self.find_or_create_from_collection(pets_array)
+    pets_array.each do |hash|
+      found_pet = self.all.find { |pet| pet.url == hash[:url] }
+      if found_pet == nil
+        self.new(hash)
+      else
+        found_pet
+      end
     end
   end
-    
   
   def self.all
     @@all

@@ -19,18 +19,24 @@ class PetAdoption::Scraper
     end
   end
     
-  def scrape_pets_index(species_url)
+  def self.scrape_pets_index(species_url)
     Nokogiri::HTML(open(species_url))
   end
   
-  def create_pets
+  def self.create_pets
+    pets = []
     PetAdoption::Species.all.each do |species|
-      scrape_pets_index(species.url).css("div.views-row").each do |pet_index|
-        new_pet = PetAdoption::Pets.find_or_create_from_pet_index(pet_index)
+      self.scrape_pets_index(species.url).css("div.views-row").each do |pet_index|
+        pets << {
+          :species => species,
+          :name => pet_index.css("div.field--name-name a").text,
+          :breed => pet_index.css("div.field.field--breed").text.strip,
+          :shelter => pet_index.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text,
+          :url => BASEPATH + pet_index.css("div.field--name-name a").attr("href").text
+        }
       end
     end
-    PetAdoption::Pets.all
-    binding.pry
+    pets
   end
   
   

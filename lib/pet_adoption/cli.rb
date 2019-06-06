@@ -4,9 +4,8 @@ require 'open-uri'
 
 class PetAdoption::CLI
   def call
-    scrape = PetAdoption::Scraper.new
-    scrape.create_species
-    scrape.create_pets
+    PetAdoption::Scraper.new.create_species
+    make_pets
     puts "Welcome to the Twin Cities' Animal Humane Society!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!"
     menu
@@ -43,6 +42,12 @@ class PetAdoption::CLI
     # end
   end
   
+  def make_pets
+    pets_array = PetAdoption::Scraper.create_pets
+    PetAdoption::Pets.find_or_create_from_collection(pets_array)
+  end
+    
+  
   def print_species
     PetAdoption::Species.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
   end
@@ -54,7 +59,5 @@ class PetAdoption::CLI
       i += 1
     end
   end
-  
-  
   
 end
