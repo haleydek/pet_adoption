@@ -4,7 +4,7 @@ require 'open-uri'
 
 class PetAdoption::CLI
   def call
-    PetAdoption::Scraper.new.create_species
+    PetAdoption::Scraper.new.create_species.create_all_pets
     puts "Welcome to the Twin Cities' Animal Humane Society!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!"
     menu
@@ -13,14 +13,21 @@ class PetAdoption::CLI
   def menu
     puts "Our shelters have the following types of animals available for adoption: "
 
-    PetAdoption::Species.print_species
+    print_species
     
     puts "Which type of animal are you interested in adopting? Please enter the corresponding number to view the available pets."
     puts "Otherwise, enter exit."
     
     input = gets.strip
     
-    species_url = PetAdoption::Species.get_species_url_from_name(input.to_i)
+    species_url = get_species_url_from_name(input)
+    
+    PetAdoption::Scraper.create_pets(species_url)
+    #scrape species page to get list of pets
+    #print list of pets
+    
+    #user selects a pet
+    #print pet's full bio
     
     # input = nil
     # while input != "exit"
@@ -34,5 +41,19 @@ class PetAdoption::CLI
     #   end
     # end
   end
+  
+  def print_species
+    PetAdoption::Species.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
+  end
+  
+  def get_species_url_from_name(input)
+    i = 0
+    PetAdoption::Species.all.find do |species|
+      return species.url when i == input.to_i
+      i += 1
+    end
+  end
+  
+  
   
 end

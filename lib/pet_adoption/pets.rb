@@ -7,8 +7,7 @@ class PetAdoption::Pets
   attr_accessor :species, :name, :breed, :shelter, :gender, :age, :weight, :fee, :id, :url
   @@all = []
   
-  def initialize(species, name, breed, shelter)
-    @species = species
+  def initialize(name, breed, shelter, url)
     @name = pet.css("div.field--name-name a").text
     @breed = pet.css("div.field.field--breed").text.strip
     @shelter = pet.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text

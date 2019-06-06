@@ -22,15 +22,20 @@ class PetAdoption::Scraper
     #accepts argument of species url
     #scrapes list of pets
     
-  def scrape_pets_index
+  def scrape_pets_index(species_url)
     Nokogiri::HTML(open(species_url))
   end
   
-  def create_pet
-    scrape_pets_index.css("div.views-row").each { |pet| PetAdoption::Pets.new(pet) }
+  def create_pets(species_url)
+    scrape_pets_index(species_url).css("div.views-row").each { |pet| PetAdoption::Pets.new(pet) }
   end
   
-  def scrape_pet
+  def create_all_pets
+    PetAdoption::Species.all.each { |species| create_pets(species.url) }
+    binding.pry
+  end
+  
+  def scrape_pet_details
     #need a method that accepts user input of a pet name and returns the pet's url
     #accepts argument of a pet's url
     #scrapes a pet's info

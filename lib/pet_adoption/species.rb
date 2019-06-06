@@ -1,6 +1,4 @@
 #A species has many pets. Pets belong to a species.
-
-#instantiate the species with a name, url and blank pets array
 #instantiate pets when you scrape the list of pets from species url
 
 class PetAdoption::Species
@@ -15,24 +13,22 @@ class PetAdoption::Species
     self.class.all << self
   end
   
+  def add_pet(pet)
+    @pets << pet
+    pet.species = self
+  end
+  
   def self.new_from_species_index(s)
     self.new(s.css("a .facet-item__value").text, BASEPATH + s.css("a").attr("href").text)
   end
   
+  def self.find_by_name(name)
+    found_species = self.all.find { |species| species.name == name }
+    found_species
+  end
+  
   def self.all
     @@all
-  end
-  
-  def self.print_species
-    self.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
-  end
-  
-  def self.get_species_url_from_name(input.to_i)
-    i = 0
-    self.all.find do |species|
-      return species.url when i == input
-      i += 1
-    end
   end
   
 end
