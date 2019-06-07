@@ -4,10 +4,10 @@ require 'open-uri'
 
 class PetAdoption::CLI
   def call
-    PetAdoption::Scraper.new.create_species
-    make_pets
+    PetAdoption::Scraper.create_species
+    PetAdoption::Scraper.create_pets
     puts "Welcome to the Twin Cities' Animal Humane Society!"
-    puts "Thank you for your interest in adopting a pet from one of our shelters!"
+    puts "Thank you for your interest in adopting a pet from one of our shelters!\n"
     menu
   end
   
@@ -28,6 +28,10 @@ class PetAdoption::CLI
     
     #user selects a pet
     #print pet's full bio
+    
+    #need a method that accepts user input of a pet name and returns the pet's url
+    #accepts argument of a pet's url
+    #scrapes a pet's info
     
     # input = nil
     # while input != "exit"

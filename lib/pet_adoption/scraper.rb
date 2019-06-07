@@ -5,25 +5,42 @@ require 'open-uri'
 class PetAdoption::Scraper
   BASEPATH = 'https://www.animalhumanesociety.org'
   
-  def get_page
+  def self.get_page
     Nokogiri::HTML(open(BASEPATH + '/adoption'))
   end
   
-  def scrape_species_index
+  def self.scrape_species_index
     self.get_page.css("#block-animaltype div div li.facet-item")
   end
   
-  def create_species
-    scrape_species_index.each do |s|
-      PetAdoption::Species.new_from_species_index(s)
+  def self.collect_species
+    species = []
+    self.scrape_species_index.each do |species_index|
+      species << {
+        :name => species_index.css("a .facet-item__value").text,
+        :url => BASEPATH + species_index.css("a").attr("href").text
+      }
     end
+    species
   end
+  
+  def self.create_species
+    species_array = self.collect_species
+    PetAdoption::Species.find_or_create_by_name(species_array)
+    binding.pry
+  end
+  
+  # def self.create_species
+  #   self.scrape_species_index.each do |s|
+  #     PetAdoption::Species.new_from_species_index(s)
+  #   end
+  # end
     
   def self.scrape_pets_index(species_url)
     Nokogiri::HTML(open(species_url))
   end
   
-  def self.create_pets
+  def self.collect_pets
     pets = []
     PetAdoption::Species.all.each do |species|
       self.scrape_pets_index(species.url).css("div.views-row").each do |pet_index|
@@ -39,15 +56,13 @@ class PetAdoption::Scraper
     pets
   end
   
-  def self.make_pets
-    pets_array = self.create_pets
+  def self.create_pets
+    pets_array = self.collect_pets
     PetAdoption::Pets.find_or_create_from_collection(pets_array)
   end
   
   def scrape_pet_details(pet_url)
-    #need a method that accepts user input of a pet name and returns the pet's url
-    #accepts argument of a pet's url
-    #scrapes a pet's info
+
     page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/animal/adoption/41683069'))
     page.css("div.animal--details-top").each do |attribute|
       gender = attribute.css(".animal--sex").text.strip

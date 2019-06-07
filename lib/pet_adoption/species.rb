@@ -6,17 +6,10 @@ class PetAdoption::Species
   @@all = []
   BASEPATH = 'https://www.animalhumanesociety.org'
   
-  def initialize(name, url)
-    @name = name
-    @url = url
-    #@pets = [] !!not single source of truth
+  def initialize(species_hash)
+    species_hash.each { |key, value| self.send(("#{key}="), value) }
     self.class.all << self
   end
-  
-  #def add_pet(pet)
-  #  @pets << pet
-  #  pet.species = self
-  #end
   
   def pets 
     PetAdoption::Pets.all.select do |pet| 
@@ -24,14 +17,19 @@ class PetAdoption::Species
     end 
   end
   
-  def self.new_from_species_index(s)
-    self.new(s.css("a .facet-item__value").text, BASEPATH + s.css("a").attr("href").text)
-  end
+  # def self.new_from_species_index(s)
+  #   self.new(s.css("a .facet-item__value").text, BASEPATH + s.css("a").attr("href").text)
+  # end
   
-  #not sure if I need #find_by_name for the species
-  def self.find_by_name(name)
-    found_species = self.all.find { |species| species.name == name }
-    found_species
+  def self.find_or_create_by_name(species_array)
+    species_array.each do |hash|
+      found_species = self.all.find { |species| species.name == hash[:name] }
+      if found_species == nil
+        self.new(hash)
+      else
+        found_species
+      end
+    end
   end
   
   def self.all
