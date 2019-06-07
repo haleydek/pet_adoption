@@ -4,7 +4,7 @@
 #add other attributes after initialization
 
 class PetAdoption::Pets
-  attr_accessor :species, :name, :breed, :shelter, :url, :gender, :age, :weight, :fee
+  attr_accessor :species, :name, :breed, :shelter, :url, :gender, :age, :weight, :fee, :bio
   @@all = []
 
   def initialize(pet_hash)

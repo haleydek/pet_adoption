@@ -33,7 +33,7 @@ class PetAdoption::CLI
     
     print_pets_from_species(species)
     
-    puts "If you are interested in viewing a specific pet's bio, please enter the corresponding number."
+    puts "\nIf you are interested in viewing a specific pet's bio, please enter the corresponding number."
     puts "Otherwise, enter exit."
     
     input_2 = gets.strip
@@ -91,6 +91,7 @@ class PetAdoption::CLI
     puts "  weight: #{pet.weight}"
     puts "  shelter: #{pet.shelter}"
     puts "  adoption fee: #{pet.fee}"
+    puts "  bio: #{pet.bio}"
   end
   
   def reset
