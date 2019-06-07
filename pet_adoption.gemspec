@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Haley DeKeyser"]
   spec.email         = ["hcd09@live.com"]
 
-  spec.summary       = "Adoptable pets at PAWS Chicago"
+  spec.summary       = "Adoptable pets at Twin Cities' Animal Humane Society"
   spec.description   = ""
   spec.homepage      = ""
   spec.license       = "MIT"

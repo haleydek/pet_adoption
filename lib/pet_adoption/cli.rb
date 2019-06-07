@@ -22,9 +22,7 @@ class PetAdoption::CLI
     
     input = gets.strip
     
-    species = get_species_from_name(input)
-    
-    print_pets_from_species(species)
+    print_pets_from_species(input)
     
     #scrape species page to get list of pets
     #print list of pets
@@ -54,14 +52,11 @@ class PetAdoption::CLI
   end
   
   def get_species_from_name(input)
-    i = 0
-    PetAdoption::Species.all.find do |species|
-      return species if i == input.to_i
-      i += 1
-    end
+    PetAdoption::Species.all[input.to_i - 1]
   end
   
-  def print_pets_from_species(species)
+  def print_pets_from_species(input)
+    species = get_species_from_name(input)
     species.pets.each_with_index do |pet, index|
       puts "#{index + 1}. #{pet.name} - #{pet.breed}"
     end
