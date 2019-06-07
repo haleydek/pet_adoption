@@ -1,6 +1,7 @@
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
+require 'colorize'
 
 require_relative "./pet_adoption/version"
 require_relative "./pet_adoption/scraper"

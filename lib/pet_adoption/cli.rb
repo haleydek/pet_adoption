@@ -1,3 +1,4 @@
+require 'colorize'
 require 'pry'
 require 'nokogiri'
 require 'open-uri'
@@ -7,9 +8,14 @@ class PetAdoption::CLI
     PetAdoption::Scraper.create_species
     PetAdoption::Scraper.create_pets
     PetAdoption::Scraper.scrape_pet_attributes
+    welcome
+    menu
+    reset
+  end
+  
+  def welcome
     puts "Welcome to the Twin Cities' Animal Humane Society!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!"
-    menu
   end
   
   def menu
@@ -26,6 +32,9 @@ class PetAdoption::CLI
     species = get_species_from_name(input_1)
     
     print_pets_from_species(species)
+    
+    puts "If you are interested in viewing a specific pet's bio, please enter the corresponding number."
+    puts "Otherwise, enter exit."
     
     input_2 = gets.strip
     
@@ -75,7 +84,18 @@ class PetAdoption::CLI
   end
   
   def print_pet_attributes(pet)
-    pet.each { |key, value| puts "\n#{key}: #{value}" }
+    puts "name: #{pet.name}"
+    puts "  breed: #{pet.breed}"
+    puts "  gender: #{pet.gender}"
+    puts "  age: #{pet.age}"
+    puts "  weight: #{pet.weight}"
+    puts "  shelter: #{pet.shelter}"
+    puts "  adoption fee: #{pet.fee}"
+  end
+  
+  def reset
+    PetAdoption::Pets.clear
+    PetAdoption::Species.clear
   end
   
 end

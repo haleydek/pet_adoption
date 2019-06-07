@@ -32,4 +32,8 @@ class PetAdoption::Species
     @@all
   end
   
+  def self.clear
+    self.all.clear
+  end
+  
 end
