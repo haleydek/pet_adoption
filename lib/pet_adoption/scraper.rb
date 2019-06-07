@@ -14,37 +14,30 @@ class PetAdoption::Scraper
   end
   
   def self.collect_species
-    species = []
+    species_array = []
     self.scrape_species_index.each do |species_index|
-      species << {
+      species_array << {
         :name => species_index.css("a .facet-item__value").text,
         :url => BASEPATH + species_index.css("a").attr("href").text
       }
     end
-    species
+    species_array
   end
   
   def self.create_species
     species_array = self.collect_species
     PetAdoption::Species.find_or_create_by_name(species_array)
-    binding.pry
   end
-  
-  # def self.create_species
-  #   self.scrape_species_index.each do |s|
-  #     PetAdoption::Species.new_from_species_index(s)
-  #   end
-  # end
     
   def self.scrape_pets_index(species_url)
     Nokogiri::HTML(open(species_url))
   end
   
   def self.collect_pets
-    pets = []
+    pets_array = []
     PetAdoption::Species.all.each do |species|
       self.scrape_pets_index(species.url).css("div.views-row").each do |pet_index|
-        pets << {
+        pets_array << {
           :species => species,
           :name => pet_index.css("div.field--name-name a").text,
           :breed => pet_index.css("div.field.field--breed").text.strip,
@@ -53,7 +46,7 @@ class PetAdoption::Scraper
         }
       end
     end
-    pets
+    pets_array
   end
   
   def self.create_pets

@@ -17,10 +17,6 @@ class PetAdoption::Species
     end 
   end
   
-  # def self.new_from_species_index(s)
-  #   self.new(s.css("a .facet-item__value").text, BASEPATH + s.css("a").attr("href").text)
-  # end
-  
   def self.find_or_create_by_name(species_array)
     species_array.each do |hash|
       found_species = self.all.find { |species| species.name == hash[:name] }
