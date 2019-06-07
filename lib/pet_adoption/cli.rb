@@ -13,16 +13,18 @@ class PetAdoption::CLI
   end
   
   def menu
-    puts "Our shelters have the following types of animals available for adoption: "
+    puts "\nOur shelters have the following types of animals available for adoption: "
 
     print_species
     
-    puts "Which type of animal are you interested in adopting? Please enter the corresponding number to view the available pets."
+    puts "\nWhich type of animal are you interested in adopting? Please enter the corresponding number to view the available pets."
     puts "Otherwise, enter exit."
     
     input = gets.strip
     
-    species_url = get_species_url_from_name(input)
+    species = get_species_from_name(input)
+    
+    print_pets_from_species(species)
     
     #scrape species page to get list of pets
     #print list of pets
@@ -51,11 +53,17 @@ class PetAdoption::CLI
     PetAdoption::Species.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
   end
   
-  def get_species_url_from_name(input)
+  def get_species_from_name(input)
     i = 0
     PetAdoption::Species.all.find do |species|
-      return species.url if i == input.to_i
+      return species if i == input.to_i
       i += 1
+    end
+  end
+  
+  def print_pets_from_species(species)
+    species.pets.each_with_index do |pet, index|
+      puts "#{index + 1}. #{pet.name} - #{pet.breed}"
     end
   end
   
