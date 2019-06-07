@@ -54,17 +54,19 @@ class PetAdoption::Scraper
     PetAdoption::Pets.find_or_create_from_collection(pets_array)
   end
   
-  def scrape_pet_details(pet_url)
-
-    page = Nokogiri::HTML(open('https://www.animalhumanesociety.org/animal/adoption/41683069'))
-    page.css("div.animal--details-top").each do |attribute|
-      gender = attribute.css(".animal--sex").text.strip
-      age = attribute.css(".animal--age").text.strip
-      weight = attribute.css(".animal--weight").text.strip
-      fee = attribute.css(".animal--price").text.strip.gsub("Adoption Fee: ", "").gsub(/[*]/, "")
+  def self.get_pet_page(pet_url)
+    Nokogiri::HTML(open(pet_url))
+  end
+  
+  def self.scrape_pet_attributes
+    PetAdoption::Pets.all.each do |pet|
+      self.get_pet_page(pet.url).css("div.animal--details-top").each do |attribute|
+        pet.gender = attribute.css(".animal--sex").text.strip
+        pet.age = attribute.css(".animal--age").text.strip
+        pet.weight = attribute.css(".animal--weight").text.strip
+        pet.fee = attribute.css(".animal--price").text.strip.gsub("Adoption Fee: ", "").gsub(/[*]/, "")
+      end
     end
-    
-    id = page.css("div.animal--details-bottom .animal-item").first.text
   end
   
 end

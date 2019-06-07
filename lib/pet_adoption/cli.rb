@@ -6,6 +6,7 @@ class PetAdoption::CLI
   def call
     PetAdoption::Scraper.create_species
     PetAdoption::Scraper.create_pets
+    PetAdoption::Scraper.scrape_pet_attributes
     puts "Welcome to the Twin Cities' Animal Humane Society!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!\n"
     menu
