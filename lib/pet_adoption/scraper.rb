@@ -28,9 +28,37 @@ class PetAdoption::Scraper
     species_array = self.collect_species
     PetAdoption::Species.find_or_create_by_name(species_array)
   end
+  
+  def self.get_shelter_page
+    Nokogiri::HTML(open(BASEPATH + '/about/hours-and-locations'))
+  end
+  
+  def self.scrape_shelter_index
+    self.get_shelter_page.css("div.paragraph.paragraph-1517.paragraph--simple-text.paragraph--simple-text--default div h3")
+  end
+  
+  def self.collect_shelters
+    shelter_array = []
+    self.scrape_shelter_index.each do |shelter|
+      shelter_array << { :name => shelter.text.strip }
+    end
+    shelter_array
+  end
+  
+  def self.create_shelters
+    shelter_array = self.collect_shelters
+    PetAdoption::Shelter.find_or_create_by_name(shelter_array)
+  end
     
   def self.scrape_pets_index(species_url)
     Nokogiri::HTML(open(species_url))
+  end
+  
+  def self.assign_shelter_to_pet(pet_index)
+    pet_shelter = pet_index.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
+    PetAdoption::Shelter.all.find do |shelter|
+      shelter if pet_shelter == shelter.name
+    end
   end
   
   def self.collect_pets
@@ -41,7 +69,7 @@ class PetAdoption::Scraper
           :species => species,
           :name => pet_index.css("div.field--name-name a").text,
           :breed => pet_index.css("div.field.field--breed").text.strip,
-          :shelter => pet_index.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text,
+          :shelter => self.assign_shelter_to_pet(pet_index),
           :url => BASEPATH + pet_index.css("div.field--name-name a").attr("href").text
         }
       end
@@ -52,6 +80,7 @@ class PetAdoption::Scraper
   def self.create_pets
     pets_array = self.collect_pets
     PetAdoption::Pets.find_or_create_from_collection(pets_array)
+    binding.pry
   end
   
   def self.get_pet_page(pet_url)

@@ -10,7 +10,6 @@ class PetAdoption::Species
   
   def pets 
     PetAdoption::Pets.all.select { |pet| pet.species == self }
-    end 
   end
   
   def self.find_or_create_by_name(species_array)

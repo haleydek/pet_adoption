@@ -5,6 +5,7 @@ require 'open-uri'
 
 class PetAdoption::CLI
   def call
+    PetAdoption::Scraper.create_shelters
     PetAdoption::Scraper.create_species
     PetAdoption::Scraper.create_pets
     PetAdoption::Scraper.scrape_pet_attributes
@@ -79,7 +80,7 @@ class PetAdoption::CLI
     puts "  gender: #{pet.gender}"
     puts "  age: #{pet.age}"
     puts "  weight: #{pet.weight}"
-    puts "  shelter: #{pet.shelter}"
+    puts "  shelter: #{pet.shelter.name}"
     puts "  adoption fee: #{pet.fee}"
     puts "  bio: #{pet.bio}"
   end
