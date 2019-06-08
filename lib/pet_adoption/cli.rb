@@ -84,12 +84,12 @@ class PetAdoption::CLI
     collection = collect_pets(shelter,species)
     collection.each_with_index do |pet, index|
         puts "#{index + 1}. #{pet.name}"
-        puts "    Breed: #{pet.breed}"
-        puts "    Gender: #{pet.gender}"
-        puts "    Age: #{pet.age}"
-        puts "    Weight: #{pet.weight}"
-        puts "    Adoption Fee: #{pet.fee}"
-        puts "    Shelter: #{pet.shelter.name}"
+        puts "     Breed: #{pet.breed}"
+        puts "     Gender: #{pet.gender}"
+        puts "     Age: #{pet.age}"
+        puts "     Weight: #{pet.weight}"
+        puts "     Adoption Fee: #{pet.fee}"
+        puts "     Shelter: #{pet.shelter.name}"
         puts "---------------------------------------"
       end
     print_bio_message
@@ -98,12 +98,12 @@ class PetAdoption::CLI
   def print_pets_by_species(species)
     species.pets.each_with_index do |pet, index|
       puts "#{index + 1}. #{pet.name}"
-      puts "   Breed: #{pet.breed}"
-      puts "   Gender: #{pet.gender}"
-      puts "   Age: #{pet.age}"
-      puts "   Weight: #{pet.weight}"
-      puts "   Adoption Fee: #{pet.fee}"
-      puts "   Shelter: #{pet.shelter.name}"
+      puts "     Breed: #{pet.breed}"
+      puts "     Gender: #{pet.gender}"
+      puts "     Age: #{pet.age}"
+      puts "     Weight: #{pet.weight}"
+      puts "     Adoption Fee: #{pet.fee}"
+      puts "     Shelter: #{pet.shelter.name}"
       puts "-----------------------------------------"
     end
     print_bio_message
