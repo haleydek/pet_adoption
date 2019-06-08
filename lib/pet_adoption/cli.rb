@@ -21,18 +21,22 @@ class PetAdoption::CLI
   
   def menu
     
-    puts "\nOur shelters have the following types of animals available for adoption: "
-
-    print_species
+    puts "\nWould you like to view adoptable pets by shelter or by species? Please enter 'shelter' or 'species' to continue."
     
-    puts "\nWhich type of animal are you interested in adopting? Please enter the corresponding number to view the available pets."
-    puts "Otherwise, enter exit."
+    input = gets.strip
+    
+    case input
+      when "shelter"
+        print_shelter
+      when "species"
+        print_species
+        input = gets.strip
     
     input_1 = gets.strip
     
-    species = get_species_from_name(input_1)
+    class_instance = get_species_from_name(input_1)
     
-    print_pets_from_species(species)
+    print_pets_from_species_or_shelter(class_instance)
     
     puts "\nIf you are interested in viewing a specific pet's bio, please enter the corresponding number."
     puts "Otherwise, enter exit."
@@ -57,15 +61,29 @@ class PetAdoption::CLI
   end
   
   def print_species
+    puts "\nWe have the following types of animals available for adoption:"
     PetAdoption::Species.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
+    puts "\nWhich type of animal are you interested in adopting? Please enter the corresponding number to view the available pets."
+    puts "Otherwise, enter exit."
+    
   end
   
   def get_species_from_name(input_1)
     PetAdoption::Species.all[input_1.to_i - 1]
   end
   
-  def print_pets_from_species(species)
-    species.pets.each_with_index do |pet, index|
+  def print_shelter
+    PetAdoption::Shelter.all.each_with_index { |shelter, i| puts "#{i + 1}. #{shelter.name}" }
+  end
+  
+  def get_shelter_from_name(input)
+    PetAdoption::Shelter.all[input.to_i - 1]
+  end
+  
+  
+  
+  def print_pets_from_species_or_shelter(class_instance)
+    class_instance.pets.each_with_index do |pet, index|
       puts "#{index + 1}. #{pet.name} - #{pet.breed}"
     end
   end

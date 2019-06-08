@@ -80,7 +80,6 @@ class PetAdoption::Scraper
   def self.create_pets
     pets_array = self.collect_pets
     PetAdoption::Pets.find_or_create_from_collection(pets_array)
-    binding.pry
   end
   
   def self.get_pet_page(pet_url)
