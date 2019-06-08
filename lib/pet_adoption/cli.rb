@@ -20,32 +20,28 @@ class PetAdoption::CLI
   end
   
   def menu
-    
-    puts "\nWould you like to view adoptable pets by shelter or by species? Please enter 'shelter' or 'species' to continue."
-    
+    puts "\nWould you like to view adoptable pets at a specific shelter in the Twin Cities? y/n"
     input = gets.strip
-    
-    case input
-      when "shelter"
-        print_shelter
-      when "species"
-        print_species
-        input = gets.strip
-    
-    input_1 = gets.strip
-    
-    class_instance = get_species_from_name(input_1)
-    
-    print_pets_from_species_or_shelter(class_instance)
-    
-    puts "\nIf you are interested in viewing a specific pet's bio, please enter the corresponding number."
-    puts "Otherwise, enter exit."
-    
-    input_2 = gets.strip
-    
-    pet = get_pet(species, input_2)
-    
-    print_pet_attributes(pet)
+    while input != "exit"
+      case input
+        when "y"
+          print_shelter
+          input = gets.strip
+          shelter = get_shelter(input)
+          puts "\nOkay, great! We will show you pets from #{shelter.name}.\n\n"
+          print_species
+          input = gets.strip
+          species = get_species(input)
+          print_pets(shelter)
+        when "n"
+          print_species
+          input = gets.strip
+          species = get_species(input)
+          print_pets(species)
+          input = gets.strip
+          pet = get_pet(species, input)
+          print_pet_attributes
+      end
     
     # input = nil
     # while input != "exit"
@@ -63,44 +59,45 @@ class PetAdoption::CLI
   def print_species
     puts "\nWe have the following types of animals available for adoption:"
     PetAdoption::Species.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
-    puts "\nWhich type of animal are you interested in adopting? Please enter the corresponding number to view the available pets."
-    puts "Otherwise, enter exit."
-    
+    puts "\nWhich type of animal are you interested in adopting? Please enter the corresponding number."
+    puts "\nOtherwise, enter exit."
   end
   
-  def get_species_from_name(input_1)
-    PetAdoption::Species.all[input_1.to_i - 1]
+  def get_species(input)
+    PetAdoption::Species.all[input.to_i - 1]
   end
   
   def print_shelter
     PetAdoption::Shelter.all.each_with_index { |shelter, i| puts "#{i + 1}. #{shelter.name}" }
+    puts "\nPlease select a shelter by entering the corresponding number."
   end
   
-  def get_shelter_from_name(input)
+  def get_shelter(input)
     PetAdoption::Shelter.all[input.to_i - 1]
   end
   
-  
-  
-  def print_pets_from_species_or_shelter(class_instance)
-    class_instance.pets.each_with_index do |pet, index|
-      puts "#{index + 1}. #{pet.name} - #{pet.breed}"
+  def print_pets(shelter_or_species)
+    shelter_or_species.pets.each_with_index do |pet, index|
+      puts "#{index + 1}. #{pet.name}"
+      puts "   Breed: #{pet.breed}"
+      puts "   Gender: #{pet.gender}"
+      puts "   Age: #{pet.age}"
+      puts "   Weight: #{pet.weight}"
+      puts "   Adoption Fee: #{pet.fee}"
+      puts "   Shelter: #{pet.shelter.name}"
+      puts "-----------------------------------------"
     end
+    puts "\n\nIf you would like to view a specific pet's bio, please enter the corresponding number."
+    puts "\nOtherwise, enter exit."
   end
   
-  def get_pet(species, input_2)
-    species.pets[input_2.to_i - 1]
+  def get_pet(shelter_or_species, input)
+    shelter_or_species.pets[input.to_i - 1]
   end
   
   def print_pet_attributes(pet)
-    puts "name: #{pet.name}"
-    puts "  breed: #{pet.breed}"
-    puts "  gender: #{pet.gender}"
-    puts "  age: #{pet.age}"
-    puts "  weight: #{pet.weight}"
-    puts "  shelter: #{pet.shelter.name}"
-    puts "  adoption fee: #{pet.fee}"
-    puts "  bio: #{pet.bio}"
+    puts "#{pet.name}'s Bio:"
+    puts "#{pet.bio}"
   end
   
   def reset
