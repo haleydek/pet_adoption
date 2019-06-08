@@ -32,28 +32,19 @@ class PetAdoption::CLI
           print_species
           input = gets.strip
           species = get_species(input)
-          print_pets(shelter)
+          print_pets_by_shelter_and_species(shelter, species)
+          input = gets.strip
+          pet = get_pet_from_collection(shelter, species, input)
+          print_pet_bio
         when "n"
           print_species
           input = gets.strip
           species = get_species(input)
-          print_pets(species)
+          print_pets_by_species(species)
           input = gets.strip
           pet = get_pet(species, input)
-          print_pet_attributes
+          print_pet_bio
       end
-    
-    # input = nil
-    # while input != "exit"
-    #   case input
-    #     when "cat"
-    #       puts "list of cats"
-    #       #execute list of cats
-    #     when "dog"
-    #       puts "list of dogs"
-    #       #execute list of dogs
-    #   end
-    # end
   end
   
   def print_species
@@ -76,8 +67,35 @@ class PetAdoption::CLI
     PetAdoption::Shelter.all[input.to_i - 1]
   end
   
-  def print_pets(shelter_or_species)
-    shelter_or_species.pets.each_with_index do |pet, index|
+  def collect_pets(shelter, species)
+    PetAdoption::Pets.all.select do |pet|
+      pet.shelter == shelter && pet.species == species
+    end
+  end
+  
+  def get_pet_from_collection(shelter, species, input)
+    collection = collect_pets(shelter, species)
+    collection[input.to_i - 1]
+  end
+    
+  
+  def print_pets_by_shelter_and_species(shelter, species)
+    collection = collect_pets(shelter,species)
+    collection.each_with_index do |pet, index|
+        puts "#{index + 1}. #{pet.name}"
+        puts "   Breed: #{pet.breed}"
+        puts "   Gender: #{pet.gender}"
+        puts "   Age: #{pet.age}"
+        puts "   Weight: #{pet.weight}"
+        puts "   Adoption Fee: #{pet.fee}"
+        puts "   Shelter: #{pet.shelter.name}"
+        puts "---------------------------------------"
+      end
+    print_bio_message
+  end
+  
+  def print_pets_by_species(species)
+    species.pets.each_with_index do |pet, index|
       puts "#{index + 1}. #{pet.name}"
       puts "   Breed: #{pet.breed}"
       puts "   Gender: #{pet.gender}"
@@ -87,15 +105,19 @@ class PetAdoption::CLI
       puts "   Shelter: #{pet.shelter.name}"
       puts "-----------------------------------------"
     end
+    print_bio_message
+  end
+
+  def print_bio_message
     puts "\n\nIf you would like to view a specific pet's bio, please enter the corresponding number."
     puts "\nOtherwise, enter exit."
   end
-  
-  def get_pet(shelter_or_species, input)
-    shelter_or_species.pets[input.to_i - 1]
+
+  def get_pet(species, input)
+    species.pets[input.to_i - 1]
   end
   
-  def print_pet_attributes(pet)
+  def print_pet_bio(pet)
     puts "#{pet.name}'s Bio:"
     puts "#{pet.bio}"
   end
