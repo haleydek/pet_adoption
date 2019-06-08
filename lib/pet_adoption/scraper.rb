@@ -96,7 +96,7 @@ class PetAdoption::Scraper
       end
       self.get_pet_page(pet.url).css("div.animal--keywords").each do |p|
         bio = p.text.split("\n").collect { |paragraph| paragraph.strip.chomp }
-        pet.bio = bio.join("\n\n\t")
+        pet.bio = bio.join("\n\t")
       end
     end
   end

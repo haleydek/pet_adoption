@@ -35,7 +35,8 @@ class PetAdoption::CLI
           print_pets_by_shelter_and_species(shelter, species)
           input = gets.strip
           pet = get_pet_from_collection(shelter, species, input)
-          print_pet_bio
+          print_pet_bio(pet)
+          input = gets.strip
         when "n"
           print_species
           input = gets.strip
@@ -43,15 +44,16 @@ class PetAdoption::CLI
           print_pets_by_species(species)
           input = gets.strip
           pet = get_pet(species, input)
-          print_pet_bio
+          print_pet_bio(pet)
+          input = gets.strip
       end
+    end
   end
   
   def print_species
     puts "\nWe have the following types of animals available for adoption:"
     PetAdoption::Species.all.each_with_index { |species, i| puts "#{i + 1}. #{species.name}" }
-    puts "\nWhich type of animal are you interested in adopting? Please enter the corresponding number."
-    puts "\nOtherwise, enter exit."
+    puts "\nWhich type of animal are you interested in adopting? Please enter the corresponding number. Otherwise, enter exit."
   end
   
   def get_species(input)
@@ -78,17 +80,16 @@ class PetAdoption::CLI
     collection[input.to_i - 1]
   end
     
-  
   def print_pets_by_shelter_and_species(shelter, species)
     collection = collect_pets(shelter,species)
     collection.each_with_index do |pet, index|
         puts "#{index + 1}. #{pet.name}"
-        puts "   Breed: #{pet.breed}"
-        puts "   Gender: #{pet.gender}"
-        puts "   Age: #{pet.age}"
-        puts "   Weight: #{pet.weight}"
-        puts "   Adoption Fee: #{pet.fee}"
-        puts "   Shelter: #{pet.shelter.name}"
+        puts "    Breed: #{pet.breed}"
+        puts "    Gender: #{pet.gender}"
+        puts "    Age: #{pet.age}"
+        puts "    Weight: #{pet.weight}"
+        puts "    Adoption Fee: #{pet.fee}"
+        puts "    Shelter: #{pet.shelter.name}"
         puts "---------------------------------------"
       end
     print_bio_message
@@ -109,8 +110,7 @@ class PetAdoption::CLI
   end
 
   def print_bio_message
-    puts "\n\nIf you would like to view a specific pet's bio, please enter the corresponding number."
-    puts "\nOtherwise, enter exit."
+    puts "\nIf you would like to view a specific pet's bio, please enter the corresponding number. Otherwise, enter exit."
   end
 
   def get_pet(species, input)
