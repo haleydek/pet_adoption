@@ -1,6 +1,3 @@
-#A species has many pets. Pets belong to a species.
-#instantiate pets when you scrape the list of pets from species url
-
 class PetAdoption::Species
   attr_accessor :name, :url
   @@all = []
@@ -12,8 +9,7 @@ class PetAdoption::Species
   end
   
   def pets 
-    PetAdoption::Pets.all.select do |pet| 
-      pet.species == self 
+    PetAdoption::Pets.all.select { |pet| pet.species == self }
     end 
   end
   

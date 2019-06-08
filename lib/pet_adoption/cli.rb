@@ -42,16 +42,6 @@ class PetAdoption::CLI
     
     print_pet_attributes(pet)
     
-    #scrape species page to get list of pets
-    #print list of pets
-    
-    #user selects a pet
-    #print pet's full bio
-    
-    #need a method that accepts user input of a pet name and returns the pet's url
-    #accepts argument of a pet's url
-    #scrapes a pet's info
-    
     # input = nil
     # while input != "exit"
     #   case input
@@ -97,6 +87,7 @@ class PetAdoption::CLI
   def reset
     PetAdoption::Pets.clear
     PetAdoption::Species.clear
+    PetAdoption::Shelter.clear
   end
   
 end
