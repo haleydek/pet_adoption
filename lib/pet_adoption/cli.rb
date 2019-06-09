@@ -28,7 +28,7 @@ class PetAdoption::CLI
           print_shelter
           input = gets.strip
           shelter = get_shelter(input)
-          puts "\nOkay, great! We will show you pets from #{shelter.name}.\n\n"
+          puts "\nOkay, great! We will show you pets at our #{shelter.name} location.\n\n"
           print_species
           input = gets.strip
           species = get_species(input)
@@ -37,6 +37,13 @@ class PetAdoption::CLI
           pet = get_pet_from_collection(shelter, species, input)
           print_pet_bio(pet)
           input = gets.strip
+          while input == "back" && input != "exit"
+              print_pets_by_shelter_and_species(shelter, species)
+              input = gets.strip
+              pet = get_pet_from_collection(shelter, species, input)
+              print_pet_bio(pet)
+              input = gets.strip
+          end
         when "n"
           print_species
           input = gets.strip
@@ -46,6 +53,13 @@ class PetAdoption::CLI
           pet = get_pet(species, input)
           print_pet_bio(pet)
           input = gets.strip
+          while input == "back" && input != "exit"
+            print_pets_by_species(species)
+            input = gets.strip
+            pet = get_pet(species, input)
+            print_pet_bio(pet)
+            input = gets.strip
+          end
       end
     end
   end
@@ -61,8 +75,9 @@ class PetAdoption::CLI
   end
   
   def print_shelter
+    puts "\nShelter Locations:"
     PetAdoption::Shelter.all.each_with_index { |shelter, i| puts "#{i + 1}. #{shelter.name}" }
-    puts "\nPlease select a shelter by entering the corresponding number."
+    puts "\nPlease select a shelter by entering the corresponding number. Otherwise, enter exit."
   end
   
   def get_shelter(input)
@@ -118,8 +133,8 @@ class PetAdoption::CLI
   end
   
   def print_pet_bio(pet)
-    puts "#{pet.name}'s Bio:"
-    puts "#{pet.bio}"
+    puts "#{pet.name}'s Bio: #{pet.bio}"
+    puts "\nPlease enter 'back' to return to the list of pets or 'exit' to exit the app."
   end
   
   def reset
