@@ -20,6 +20,7 @@ class PetAdoption::CLI
   end
   
   def menu
+    sleep(1)
     puts "\nWould you like to view adoptable pets at a specific shelter in the Twin Cities? y/n"
     input = gets.strip
     while input != "exit"
@@ -28,7 +29,7 @@ class PetAdoption::CLI
           print_shelter
           input = gets.strip
           shelter = get_shelter(input)
-          puts "\nOkay, great! We will show you pets at our #{shelter.name} location.\n\n"
+          shelter_response_message(shelter)
           print_species
           input = gets.strip
           species = get_species(input)
@@ -38,11 +39,11 @@ class PetAdoption::CLI
           print_pet_bio(pet)
           input = gets.strip
           while input == "back" && input != "exit"
-              print_pets_by_shelter_and_species(shelter, species)
-              input = gets.strip
-              pet = get_pet_from_collection(shelter, species, input)
-              print_pet_bio(pet)
-              input = gets.strip
+            print_pets_by_shelter_and_species(shelter, species)
+            input = gets.strip
+            pet = get_pet_from_collection(shelter, species, input)
+            print_pet_bio(pet)
+            input = gets.strip
           end
         when "n"
           print_species
@@ -82,6 +83,12 @@ class PetAdoption::CLI
   
   def get_shelter(input)
     PetAdoption::Shelter.all[input.to_i - 1]
+  end
+  
+  def shelter_response_message(shelter)
+    sleep(1)
+    puts "\nOkay, great! We will show you pets at our #{shelter.name} location.\n"
+    sleep(1)
   end
   
   def collect_pets(shelter, species)
@@ -125,6 +132,7 @@ class PetAdoption::CLI
   end
 
   def print_bio_message
+    sleep(1)
     puts "\nIf you would like to view a specific pet's bio, please enter the corresponding number. Otherwise, enter exit."
   end
 
@@ -133,8 +141,9 @@ class PetAdoption::CLI
   end
   
   def print_pet_bio(pet)
-    puts "#{pet.name}'s Bio: #{pet.bio}"
-    puts "\nPlease enter 'back' to return to the list of pets or 'exit' to exit the app."
+    puts "\n#{pet.name}'s Bio: #{pet.bio}"
+    sleep(1)
+    puts "Please enter 'back' to return to the list of pets or 'exit' to exit the app."
   end
   
   def reset
