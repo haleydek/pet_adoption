@@ -99,7 +99,7 @@ class PetAdoption::CLI
   def print_pets_by_shelter_and_species(shelter, species)
     collection = collect_pets(shelter,species)
     collection.each_with_index do |pet, index|
-        puts "#{index + 1}. #{pet.name}"
+        puts "#{index + 1}. #{pet.name.upcase}".colorize(:light_blue)
         puts "     Breed: #{pet.breed}"
         puts "     Gender: #{pet.gender}"
         puts "     Age: #{pet.age}"
@@ -113,7 +113,7 @@ class PetAdoption::CLI
   
   def print_pets_by_species(species)
     species.pets.each_with_index do |pet, index|
-      puts "#{index + 1}. #{pet.name}"
+      puts "#{index + 1}. #{pet.name.upcase}".colorize(:light_blue)
       puts "     Breed: #{pet.breed}"
       puts "     Gender: #{pet.gender}"
       puts "     Age: #{pet.age}"
@@ -135,7 +135,7 @@ class PetAdoption::CLI
   end
   
   def print_pet_bio(pet)
-    puts "\n#{pet.name}'s Bio: #{pet.bio}"
+    puts "\n#{pet.name.upcase}'s BIO: ".colorize(:light_blue) + "#{pet.bio}"
     sleep(1)
     puts "Please enter 'back' to return to the list of pets or 'exit' to exit the app."
   end
