@@ -20,7 +20,7 @@ class PetAdoption::CLI
   end
   
   def menu
-    sleep(1)
+    sleep(2)
     puts "\nWould you like to view adoptable pets at a specific shelter in the Twin Cities? y/n"
     input = gets.strip
     while input != "exit"
@@ -33,18 +33,13 @@ class PetAdoption::CLI
           print_species
           input = gets.strip
           species = get_species(input)
-          print_pets_by_shelter_and_species(shelter, species)
-          input = gets.strip
-          pet = get_pet_from_collection(shelter, species, input)
-          print_pet_bio(pet)
-          input = gets.strip
-          while input == "back" && input != "exit"
+          begin
             print_pets_by_shelter_and_species(shelter, species)
             input = gets.strip
             pet = get_pet_from_collection(shelter, species, input)
             print_pet_bio(pet)
             input = gets.strip
-          end
+          end while input == "back"
         when "n"
           print_species
           input = gets.strip
@@ -54,13 +49,13 @@ class PetAdoption::CLI
           pet = get_pet(species, input)
           print_pet_bio(pet)
           input = gets.strip
-          while input == "back" && input != "exit"
+          begin
             print_pets_by_species(species)
             input = gets.strip
             pet = get_pet(species, input)
             print_pet_bio(pet)
             input = gets.strip
-          end
+          end while input == "back"
       end
     end
   end
@@ -86,7 +81,6 @@ class PetAdoption::CLI
   end
   
   def shelter_response_message(shelter)
-    sleep(1)
     puts "\nOkay, great! We will show you pets at our #{shelter.name} location.\n"
     sleep(1)
   end
