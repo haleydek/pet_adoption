@@ -1,8 +1,6 @@
 # PetAdoption
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/pet_adoption`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This Ruby Gem provides a CLI to view the pets available for adoption at the Twin Cities' Animal Humane Society per the organization's website.
 
 ## Installation
 
@@ -22,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Enter the code below in your terminal and follow the on-screen prompts.
+
+    $ run
 
 ## Development
 
