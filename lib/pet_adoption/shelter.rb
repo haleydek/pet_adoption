@@ -4,7 +4,7 @@ class PetAdoption::Shelter
   
   def initialize(shelter_hash)
     shelter_hash.each { |key, value| self.send(("#{key}="), value) }
-    self.class.all << self
+    @@all << self
   end
   
   def self.find_or_create_by_name(shelter_array)

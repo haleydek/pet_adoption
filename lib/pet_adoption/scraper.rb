@@ -1,7 +1,3 @@
-require 'pry'
-require 'nokogiri'
-require 'open-uri'
-
 class PetAdoption::Scraper
   BASEPATH = 'https://www.animalhumanesociety.org'
   
@@ -56,8 +52,9 @@ class PetAdoption::Scraper
   
   def self.assign_shelter_to_pet(pet_index)
     pet_shelter = pet_index.css("div.field.field--name-field-location.field--type-entity-reference.field--label-hidden.field__item").text
+    #shelters: find_or_create_by_name here since we have to iterate through anyways. delete 56-58
     PetAdoption::Shelter.all.find do |shelter|
-      shelter if pet_shelter == shelter.name
+      pet_shelter == shelter.name
     end
   end
   

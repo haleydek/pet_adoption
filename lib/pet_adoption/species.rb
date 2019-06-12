@@ -1,11 +1,10 @@
 class PetAdoption::Species
   attr_accessor :name, :url
   @@all = []
-  BASEPATH = 'https://www.animalhumanesociety.org'
   
   def initialize(species_hash)
     species_hash.each { |key, value| self.send(("#{key}="), value) }
-    self.class.all << self
+    @@all << self
   end
   
   def pets 

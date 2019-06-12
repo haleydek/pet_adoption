@@ -1,26 +1,30 @@
-require 'colorize'
-require 'pry'
-require 'nokogiri'
-require 'open-uri'
-
 class PetAdoption::CLI
   def call
-    PetAdoption::Scraper.create_shelters
-    PetAdoption::Scraper.create_species
-    PetAdoption::Scraper.create_pets
-    PetAdoption::Scraper.scrape_pet_attributes
     welcome
+    waiting_message
+    generate_all_class_instances
     menu
     reset
   end
-  
+
   def welcome
     puts "Welcome to the Twin Cities' Animal Humane Society!"
     puts "Thank you for your interest in adopting a pet from one of our shelters!"
   end
   
+  def waiting_message
+    sleep(3)
+    puts "Please wait while we generate data about the animals in our shelters."
+  end
+  
+  def generate_all_class_instances
+    PetAdoption::Scraper.create_shelters
+    PetAdoption::Scraper.create_species
+    PetAdoption::Scraper.create_pets
+    PetAdoption::Scraper.scrape_pet_attributes
+  end
+  
   def menu
-    sleep(2)
     puts "\nWould you like to view adoptable pets at a specific shelter in the Twin Cities? y/n"
     input = gets.strip
     while input != "exit"
@@ -36,6 +40,7 @@ class PetAdoption::CLI
           begin
             print_pets_by_shelter_and_species(shelter, species)
             input = gets.strip
+            break if input == "exit"
             pet = get_pet_from_collection(shelter, species, input)
             print_pet_bio(pet)
             input = gets.strip
@@ -52,6 +57,7 @@ class PetAdoption::CLI
           begin
             print_pets_by_species(species)
             input = gets.strip
+            break if input == "exit"
             pet = get_pet(species, input)
             print_pet_bio(pet)
             input = gets.strip

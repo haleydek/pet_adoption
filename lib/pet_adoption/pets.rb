@@ -4,7 +4,7 @@ class PetAdoption::Pets
 
   def initialize(pet_hash)
     pet_hash.each { |key, value| self.send(("#{key}="), value) }
-    self.class.all << self
+    @@all << self
   end
   
   def self.find_or_create_from_collection(pets_array)
