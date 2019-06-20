@@ -14,7 +14,7 @@ class PetAdoption::CLI
   
   def waiting_message
     sleep(3)
-    puts "Please wait while we generate data about the animals in our shelters."
+    puts "\nPlease wait while we gather a list of the animals in our shelters."
   end
   
   def generate_all_class_instances
@@ -32,10 +32,12 @@ class PetAdoption::CLI
         when "y"
           print_shelter
           input = gets.strip
+          break if input == "exit"
           shelter = get_shelter(input)
           shelter_response_message(shelter)
           print_species
           input = gets.strip
+          break if input == "exit"
           species = get_species(input)
           begin
             print_pets_by_shelter_and_species(shelter, species)
@@ -48,9 +50,11 @@ class PetAdoption::CLI
         when "n"
           print_species
           input = gets.strip
+          break if input == "exit"
           species = get_species(input)
           print_pets_by_species(species)
           input = gets.strip
+          break if input == "exit"
           pet = get_pet(species, input)
           print_pet_bio(pet)
           input = gets.strip
