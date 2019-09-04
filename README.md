@@ -4,31 +4,13 @@ This Ruby Gem provides a CLI to view the pets available for adoption at the Twin
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'pet_adoption'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install pet_adoption
+Fork and clone this repo. Navigate into the folder for this repo on your computer.
 
 ## Usage
 
-Enter the code below in your terminal and follow the on-screen prompts.
+Enter the code below in your terminal and follow the prompts. Please be patient, as it may take a minute or two for the pet data to compile.
 
-    $ run
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+    $ bin/run
 
 ## Contributing
 
@@ -36,7 +18,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/'haley
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The CLI app is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
 
 ## Code of Conduct
 
