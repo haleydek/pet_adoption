@@ -1,6 +1,6 @@
 # PetAdoption
 
-This Ruby Gem provides a CLI to view the pets available for adoption at the Twin Cities' Animal Humane Society per the organization's website.
+This CLI app scrapes all pets currently available for adoption on the Twin Cities' Animal Humane Society's website. Follow the prompts in your terminal to browse the available pets and find your future fur baby!
 
 ## Installation
 
